@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
 
 import api from './src/services/api';
-import Filmes from './src/services/components/Filmes';
+import Films from './src/services/components/Filmes';
 
 export default function App() {
-  const [filmes, setFilmes] = useState([]);
+  const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => { 
-    async function loadFilmes(){
+    async function loadFilms(){
       const response = await api.get('r-api/?api=filmes');
-      setFilmes(response.data); 
+      setFilms(response.data); 
       setLoading(false);
     }
-
-    loadFilmes();
+    loadFilms();
   }, []);
 
   if(loading){
@@ -28,9 +27,9 @@ export default function App() {
     return (
       <View style={styles.container}>
         <FlatList
-          data={filmes}
+          data={films}
           keyExtractor={ item => String(item.id)}
-          renderItem={({item}) => <Filmes data={item}/>}
+          renderItem={({item}) => <Films data={item}/>}
         />
       </View>
     );
